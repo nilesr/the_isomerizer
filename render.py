@@ -3,7 +3,7 @@ from pyglet import gl
 #data_orig = json.load(open("test4", "r"))
 data_orig = []
 #message = string.ascii_letters
-message = "ayy lmao"
+message = ["lmao"]
 def from_char(c):
     data_orig = []
     for line in subprocess.check_output(["toilet", "-f", "letter", c]).decode("utf-8").split("\n"):
@@ -12,7 +12,8 @@ def from_char(c):
     data_orig = data_orig[::-1]
     return data_orig
 data = []
-side_length = 40
+#side_length = 40
+side_length = 8
 window = pyglet.window.Window()
 def line(x1, y1, x2, y2):
     gl.glBegin(gl.GL_LINES)
@@ -101,7 +102,7 @@ def change(unused):
     else:
         i = 0
         try:
-            data_orig = from_char(message[0])
+            data_orig = from_char(message[0]) * 100
         except:
             return
         message = message[1:]
