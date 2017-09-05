@@ -1,9 +1,11 @@
 import pyglet, json, time, subprocess, string
 from pyglet import gl
-#data_orig = json.load(open("test4", "r"))
+#data_orig = json.load(open("test", "r"))
+#data = data_orig
 data_orig = []
-#message = string.ascii_letters
-message = ["lmao"]
+message = string.ascii_letters
+#message = ["lmao"]
+message = ["g/u/rl", "please"] * 20
 def from_char(c):
     data_orig = []
     for line in subprocess.check_output(["toilet", "-f", "letter", c]).decode("utf-8").split("\n"):
@@ -13,7 +15,7 @@ def from_char(c):
     return data_orig
 data = []
 #side_length = 40
-side_length = 8
+side_length = 15
 window = pyglet.window.Window()
 def line(x1, y1, x2, y2):
     gl.glBegin(gl.GL_LINES)
@@ -81,7 +83,7 @@ def on_draw():
         level.sort(key = lambda x: -sum(x))
         for point in level:
             x, y, z = point
-            c_x = int(window.width/2)
+            c_x = int(window.width/5)
             c_y = int(window.height/99) + int(z*side_length/2)
 
             c_x -= side_length * x
@@ -92,19 +94,23 @@ def on_draw():
 
             graph(c_x, c_y, data[z][x][y])
 i = 0
+wait = 0
 def change(unused):
-    global i, message, data_orig, data
+    global i, message, data_orig, data, wait
     if i <= len(data_orig):
         data = data_orig[0:i]
         #print(len(data))
         i += 1
         on_draw()
     else:
-        i = 0
-        try:
-            data_orig = from_char(message[0]) * 100
-        except:
-            return
-        message = message[1:]
-pyglet.clock.schedule_interval(change, 1/10)
+        wait+= 1
+        if wait > 10:
+            wait = 0
+            i = 0
+            try:
+                data_orig = from_char(message[0])
+            except:
+                return
+            message = message[1:]
+pyglet.clock.schedule_interval(change, 1.0/10)
 pyglet.app.run()
