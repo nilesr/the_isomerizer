@@ -5,7 +5,7 @@ from pyglet import gl
 data_orig = []
 message = string.ascii_letters
 #message = ["lmao"]
-message = ["g/u/rl", "please"] * 20
+message = ["the", "iso", "mer", "izer"] * 20
 def from_char(c):
     data_orig = []
     for line in subprocess.check_output(["toilet", "-f", "letter", c]).decode("utf-8").split("\n"):
@@ -15,7 +15,7 @@ def from_char(c):
     return data_orig
 data = []
 #side_length = 40
-side_length = 15
+side_length = 20
 window = pyglet.window.Window()
 def line(x1, y1, x2, y2):
     gl.glBegin(gl.GL_LINES)
